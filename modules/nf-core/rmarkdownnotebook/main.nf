@@ -2,7 +2,7 @@ include { dump_params_yml; indent_code_block } from "./parametrize"
 
 process RMARKDOWNNOTEBOOK {
     tag "$meta.id"
-    label 'process_medium'
+    label 'process_high'
 
     //NB: You likely want to override this with a container containing all required
     //dependencies for your analysis. The container at least needs to contain the
@@ -18,11 +18,11 @@ process RMARKDOWNNOTEBOOK {
     path input_files
 
     output:
-    tuple val(meta), path("*.html")              , emit: report
-    tuple val(meta), path("*.parameterised.Rmd") , emit: parameterised_notebook, optional: true
-    tuple val(meta), path ("artifacts/*")        , emit: artifacts, optional: true
-    tuple val(meta), path ("session_info.log")   , emit: session_info
-    path  "versions.yml"                         , emit: versions
+    tuple val(meta), path("*.html")             , emit: report
+    tuple val(meta), path("*.parameterised.Rmd"), emit: parameterised_notebook, optional: true
+    tuple val(meta), path("artifacts/*")        , emit: artifacts             , optional: true
+    tuple val(meta), path("session_info.log")   , emit: session_info
+    path  "versions.yml"                        , emit: versions
 
     when:
     task.ext.when == null || task.ext.when
